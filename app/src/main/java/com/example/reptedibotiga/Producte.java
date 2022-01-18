@@ -1,28 +1,41 @@
 package com.example.reptedibotiga;
 
-public class Producte {
+import java.io.Serializable;
+
+public class Producte implements Serializable {
     private final String name;
     private final int image;
-    private final float pricce;
+    private final double price;
     private final int inStock;
+    private final int inStorage;
     private final boolean inDiscount;
     private int discount;
+    private double discountedPrice;
 
-    public Producte(String name, int image, float pricce, int inStock, boolean inDiscount, int discount) {
+    public Producte(String name, int image, double price, int inStock, int inStorage, boolean inDiscount, int discount) {
         this.name = name;
         this.image = image;
-        this.pricce = pricce;
+        this.price = price;
         this.inStock = inStock;
+        this.inStorage = inStorage;
         this.inDiscount = inDiscount;
         this.discount = discount;
+        this.discountedPrice = calculateDiscountedPrice(price, discount);
     }
 
-    public Producte(String name, int image, float pricce, int inStock, boolean inDiscount) {
+    public Producte(String name, int image, double price, int inStock, int inStorage, boolean inDiscount) {
         this.name = name;
         this.image = image;
-        this.pricce = pricce;
+        this.price = price;
         this.inStock = inStock;
+        this.inStorage = inStorage;
         this.inDiscount = inDiscount;
+    }
+
+    private double calculateDiscountedPrice(double price, int discount) {
+        double toDiscount = (double) (price / 100) * discount;
+
+        return ( price - toDiscount );
     }
 
     public String getName() {
@@ -33,12 +46,16 @@ public class Producte {
         return image;
     }
 
-    public float getPricce() {
-        return pricce;
+    public double getPrice() {
+        return price;
     }
 
     public int getInStock() {
         return inStock;
+    }
+
+    public int getInStorage() {
+        return inStorage;
     }
 
     public boolean isInDiscount() {
@@ -49,10 +66,7 @@ public class Producte {
         return discount;
     }
 
-    @Override
-    public String toString() {
-        return "Producte{" + "name='" + name + '\'' + ", image=" + image + ", pricce=" + pricce +
-                ", inStock=" + inStock + ", inDiscount=" + inDiscount + ", discount=" + discount +
-                '}';
+    public double getDiscountedPrice() {
+        return discountedPrice;
     }
 }
