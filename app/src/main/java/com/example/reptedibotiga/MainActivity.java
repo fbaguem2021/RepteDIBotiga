@@ -46,16 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
     private Producte[] getProductes(){
         return new Producte[]{
-                new Producte("p0",0, 0, 0, 0, false),
-                new Producte("p1",0, 0, 0, 0, true, 0),
-                new Producte("p2",0, 0, 0, 0, false),
-                new Producte("p3",0, 0, 0, 0, false),
-                new Producte("p4",0, 0, 0, 0, true, 0),
-                new Producte("p5",0, 0, 0, 0, true, 0),
-                new Producte("p6",0, 0, 0, 0, false),
-                new Producte("p7",0, 0, 0, 0, false),
-                new Producte("p8",0, 0, 0, 0, true, 0),
-                new Producte("p9",0, 0, 0, 0, true, 0)
+                new Producte("p0",0, 0, 5, 20, false),
+                new Producte("p1",0, 0, 5, 20, true, 0),
+                new Producte("p2",0, 0, 5, 20, false),
+                new Producte("p3",0, 0, 5, 20, false),
+                new Producte("p4",0, 0, 5, 20, true, 0),
+                new Producte("p5",0, 0, 5, 20, true, 0),
+                new Producte("p6",0, 0, 5, 20, false),
+                new Producte("p7",0, 0, 5, 20, false),
+                new Producte("p8",0, 0, 5, 20, true, 0),
+                new Producte("p9",0, 0, 5, 20, true, 0)
         };
     }
 }

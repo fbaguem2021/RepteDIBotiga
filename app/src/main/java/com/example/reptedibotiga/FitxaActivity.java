@@ -35,8 +35,9 @@ public class FitxaActivity extends AppCompatActivity {
         if (producteSelected.isInDiscount())
             discountSelected.setText(producteSelected.getDiscountedPrice()+" €");
 
+        cuantitySpinner = startCuantitySpinner(cuantitySpinner, producteSelected);
     }
-    private void startSpinner(Spinner spinner, Producte producte){
+    private Spinner startCuantitySpinner(Spinner spinner, Producte producte) {
         String [] totalNumSpinner = new String[producte.getInStock()];
         for(int i = 0; i < producte.getInStock(); i++)
         {
@@ -44,5 +45,6 @@ public class FitxaActivity extends AppCompatActivity {
         }
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, totalNumSpinner);
         spinner.setAdapter(adapter);
+        return spinner;
     }
 }
