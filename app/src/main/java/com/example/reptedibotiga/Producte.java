@@ -3,14 +3,17 @@ package com.example.reptedibotiga;
 import java.io.Serializable;
 
 public class Producte implements Serializable {
-    private final String name;
-    private final int image;
-    private final double price;
-    private final int inStock;
-    private final int inStorage;
-    private final boolean inDiscount;
+    private String name;
+    private int image;
+    private double price;
+    private int inStock;
+    private int inStorage;
+    private boolean inDiscount;
     private int discount;
     private double discountedPrice;
+
+    private int cantidadProductos;
+    private double totPrice;
 
     public Producte(String name, int image, double price, int inStock, int inStorage, boolean inDiscount, int discount) {
         this.name = name;
@@ -32,10 +35,27 @@ public class Producte implements Serializable {
         this.inDiscount = inDiscount;
     }
 
+    public Producte(int cantidadProductos, double totPrice) {
+        this.cantidadProductos = cantidadProductos;
+        this.totPrice = totPrice;
+    }
+
+    public void setCantidadProductos(int nuevaCantidad) {
+        cantidadProductos = nuevaCantidad;
+    }
+
+    public void setTotPrice(double nuevoTotal) {
+        totPrice = nuevoTotal;
+    }
+
+    public double getTotPrice() {
+        return totPrice;
+    }
+
     private double calculateDiscountedPrice(double price, int discount) {
         double toDiscount = (double) (price / 100) * discount;
 
-        return ( price - toDiscount );
+        return (price - toDiscount);
     }
 
     public String getName() {
@@ -68,5 +88,9 @@ public class Producte implements Serializable {
 
     public double getDiscountedPrice() {
         return discountedPrice;
+    }
+
+    public String getCarrito() {
+        return "Productos en carrito: " + cantidadProductos + " / Precio: " + totPrice;
     }
 }

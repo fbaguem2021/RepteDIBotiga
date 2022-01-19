@@ -8,4 +8,26 @@
         <item name="android:layout_marginHorizontal" tools:targetApi="o">15sp</item>
         <item name="android:layout_marginVertical" tools:targetApi="o">5sp</item>
     </style>
+    <style name="btnStyle" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">200sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">20sp</item>
+    </style>
+    <style name="txtviewStyle" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:padding">10sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="layoutStyle" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">500sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="layoutStyle.subLayout" parent="layoutStyle">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
 </resources>
