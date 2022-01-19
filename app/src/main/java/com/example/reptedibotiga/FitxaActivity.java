@@ -46,11 +46,11 @@ public class FitxaActivity extends AppCompatActivity {
                     producteActual.setTotPrice(nuevoTotal);
                 } else {
                     double nuevoTotal = producteSelected.getPrice() * totalNum;
-                    producteSelected.setTotPrice(nuevoTotal);
+                    producteActual.setTotPrice(nuevoTotal);
                 }
                 producteActual.setCantidadProductos(totalNum);
 
-                priceSelected.setText(producteActual.getTotPrice()+"€");
+                priceSelected.setText(producteActual.getTotPrice()+" €");
             }
 
             @Override
@@ -94,8 +94,7 @@ public class FitxaActivity extends AppCompatActivity {
             producteActual = new Producte((int) 1, producteSelected.getDiscountedPrice());
         } else {
             inDiscountSelected.setText("En oferta: NO");
-            priceSelected.setText(producteSelected.getPrice()+"€");
-            Toast.makeText(context, producteSelected.getPrice()+"€", Toast.LENGTH_SHORT).show();
+            priceSelected.setText(producteSelected.getPrice()+" €");
             producteActual = new Producte(1, producteSelected.getDiscountedPrice());
         }
         cuantitySpinner.setAdapter(getCuantityAdapter(producteSelected));
