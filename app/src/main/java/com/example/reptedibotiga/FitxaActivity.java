@@ -2,6 +2,7 @@ package com.example.reptedibotiga;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,29 @@ public class FitxaActivity extends AppCompatActivity {
     public static Producte producteActual;
     public static Context context;
 
+    public class Holder {
+        final ImageView imgSelected;
+        final TextView nameSelected;
+        final TextView lblStock;
+        final TextView lblStored;
+        final TextView inDiscountSelected;
+        final TextView priceSelected;
+        final Spinner cuantitySpinner;
+        final View view;
+
+        public Holder(View view){
+            this.view = view;
+
+            this.imgSelected        = view.findViewById(R.id.imgSelected);
+            this.nameSelected       = view.findViewById(R.id.nameSelected);
+            this.lblStock           = view.findViewById(R.id.lblStock);
+            this.lblStored          = view.findViewById(R.id.lblStored);
+            this.inDiscountSelected = view.findViewById(R.id.inDiscountSelected);
+            this.priceSelected      = view.findViewById(R.id.priceSelected);
+            this.cuantitySpinner    = view.findViewById(R.id.cuantitySpinner);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +59,7 @@ public class FitxaActivity extends AppCompatActivity {
         Button btnAñadirCarrito = findViewById(R.id.btnAñadirCarrito);
         Button btnComprar = findViewById(R.id.btnComprar);
 
-        cargarProducto(producteSelected);
+        cargarProducto(producteSelected, );
 
         cuantitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -74,29 +98,23 @@ public class FitxaActivity extends AppCompatActivity {
         }
         return new ArrayAdapter(this, android.R.layout.simple_list_item_1, totalNumSpinner);
     }
-    private final void cargarProducto(Producte producteSelected){
-        ImageView imgSelected = findViewById(R.id.imgSelected);
-        TextView nameSelected = findViewById(R.id.nameSelected);
-        TextView lblStock = findViewById(R.id.lblStock);
-        TextView lblStored = findViewById(R.id.lblStored);
-        TextView inDiscountSelected = findViewById(R.id.inDiscountSelected);
-        TextView priceSelected = findViewById(R.id.priceSelected);
-        Spinner cuantitySpinner = findViewById(R.id.cuantitySpinner);
+    private void cargarProducto(Producte producteSelected, View view){
+        Holder holder = new Holder(view);
 
-        imgSelected.setImageResource(producteSelected.getImage());
-        nameSelected.setText(producteSelected.getName());
-        lblStock.setText(""+producteSelected.getInStock());
-        lblStored.setText(""+producteSelected.getInStorage());
+        holder.imgSelected.setImageResource(producteSelected.getImage());
+        holder.nameSelected.setText(producteSelected.getName());
+        holder.lblStock.setText( "En  stock:  "+producteSelected.getInStock());
+        holder.lblStored.setText("Almacenado: "+producteSelected.getInStorage());
 
         if (producteSelected.isInDiscount()) {
-            inDiscountSelected.setText("En oferta: SI");
-            priceSelected.setText(""+producteSelected.getDiscountedPrice() + " €");
+            holder.inDiscountSelected.setText("En oferta: SI");
+            holder.priceSelected.setText(""+producteSelected.getDiscountedPrice() + " €");
             producteActual = new Producte((int) 1, producteSelected.getDiscountedPrice());
         } else {
-            inDiscountSelected.setText("En oferta: NO");
-            priceSelected.setText(producteSelected.getPrice()+" €");
+            holder.inDiscountSelected.setText("En oferta: NO");
+            holder.priceSelected.setText(producteSelected.getPrice()+" €");
             producteActual = new Producte(1, producteSelected.getDiscountedPrice());
         }
-        cuantitySpinner.setAdapter(getCuantityAdapter(producteSelected));
+        holder.cuantitySpinner.setAdapter(getCuantityAdapter(producteSelected));
     }
 }

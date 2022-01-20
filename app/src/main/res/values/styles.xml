@@ -4,9 +4,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">5sp</item>
-        <item name="android:textSize">25sp</item>
-        <item name="android:layout_marginHorizontal" tools:targetApi="o">15sp</item>
-        <item name="android:layout_marginVertical" tools:targetApi="o">5sp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_margin">5sp</item>
     </style>
     <style name="btnStyle" parent="TextAppearance.AppCompat.Button">
         <item name="android:textColor">@color/white</item>
@@ -29,5 +28,11 @@
     <style name="layoutStyle.subLayout" parent="layoutStyle">
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center_horizontal</item>
+    </style>
+    <style name="recyclerStyle" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">100sp</item>
+        <item name="android:background">@drawable/border</item>
     </style>
 </resources>
