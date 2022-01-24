@@ -30,9 +30,8 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
     <style name="recyclerStyle" parent="TextAppearance.AppCompat">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">500sp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">100sp</item>
         <item name="android:background">@drawable/border</item>
     </style>
 </resources>

@@ -35,7 +35,8 @@ public class Producte implements Serializable {
         this.inDiscount = inDiscount;
     }
 
-    public Producte(int cantidadProductos, double totPrice) {
+    public Producte(String name, int cantidadProductos, double totPrice) {
+        this.name = name;
         this.cantidadProductos = cantidadProductos;
         this.totPrice = totPrice;
     }
@@ -46,6 +47,10 @@ public class Producte implements Serializable {
 
     public void setTotPrice(double nuevoTotal) {
         totPrice = nuevoTotal;
+    }
+
+    public int getCantidadProductos() {
+        return cantidadProductos;
     }
 
     public double getTotPrice() {
@@ -90,7 +95,8 @@ public class Producte implements Serializable {
         return discountedPrice;
     }
 
-    public String getCarrito() {
-        return "Productos en carrito: " + cantidadProductos + " / Precio: " + totPrice;
+    @Override
+    public String toString(){
+        return "Comprado: "+getName()+" (x"+getCantidadProductos()+") "+getTotPrice()+"€";
     }
 }

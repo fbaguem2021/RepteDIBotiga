@@ -2,7 +2,6 @@ package com.example.reptedibotiga;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,12 +14,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+
 public class FitxaActivity extends AppCompatActivity {
 
     public static final String PRODUCTE = "producte";
     public static final String POSITION = "position";
     public static Producte producteActual;
-    public static Context context;
 
     public class Holder {
         final ImageView imgSelected;
@@ -30,10 +30,13 @@ public class FitxaActivity extends AppCompatActivity {
         final TextView inDiscountSelected;
         final TextView priceSelected;
         final Spinner cuantitySpinner;
+        final TextView lblPrecioTotal;
+        final Button btnAniadirCarrito;
+        final Button btnComprar;
         final View view;
 
-        public Holder(View view){
-            this.view = view;
+        public Holder() {
+            this.view = FitxaActivity.this.findViewById(R.id.layoutFitxa);
 
             this.imgSelected        = view.findViewById(R.id.imgSelected);
             this.nameSelected       = view.findViewById(R.id.nameSelected);
@@ -42,6 +45,9 @@ public class FitxaActivity extends AppCompatActivity {
             this.inDiscountSelected = view.findViewById(R.id.inDiscountSelected);
             this.priceSelected      = view.findViewById(R.id.priceSelected);
             this.cuantitySpinner    = view.findViewById(R.id.cuantitySpinner);
+            this.lblPrecioTotal     = view.findViewById(R.id.lblPrecioTotal);
+            this.btnAniadirCarrito   = view.findViewById(R.id.btnAniadirCarrito);
+            this.btnComprar         = view.findViewById(R.id.btnComprar);
         }
     }
 
@@ -49,32 +55,29 @@ public class FitxaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fitxa);
-        context = this;
 
         Intent intent = getIntent();
         final Producte producteSelected = (Producte) intent.getSerializableExtra(PRODUCTE);
 
-        TextView priceSelected = findViewById(R.id.priceSelected);
-        Spinner cuantitySpinner = findViewById(R.id.cuantitySpinner);
-        Button btnAñadirCarrito = findViewById(R.id.btnAñadirCarrito);
-        Button btnComprar = findViewById(R.id.btnComprar);
-
-        cargarProducto(producteSelected, );
-
-        cuantitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Holder holder = cargarProducto(producteSelected);
+        holder.cuantitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                int totalNum = Integer.parseInt(cuantitySpinner.getSelectedItem().toString());
-                if (producteSelected.isInDiscount()) {
-                    double nuevoTotal = producteSelected.getDiscountedPrice() * totalNum;
-                    producteActual.setTotPrice(nuevoTotal);
-                } else {
-                    double nuevoTotal = producteSelected.getPrice() * totalNum;
-                    producteActual.setTotPrice(nuevoTotal);
-                }
+                int totalNum = Integer.parseInt(holder.cuantitySpinner.getSelectedItem().toString());
                 producteActual.setCantidadProductos(totalNum);
 
-                priceSelected.setText(producteActual.getTotPrice()+" €");
+                java.text.DecimalFormat formatter = new java.text.DecimalFormat("##.##");
+                double totalPrice = producteActual.getTotPrice() * producteActual.getCantidadProductos();
+
+                try {
+                    // guarde el valor de totalPrice, despres de aplicar-li el format previament creat
+                    totalPrice = formatter.parse(formatter.format(totalPrice)).doubleValue();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                producteActual.setTotPrice(totalPrice);
+                holder.lblPrecioTotal.setText( formatter.format(totalPrice) + " €" );
             }
 
             @Override
@@ -83,10 +86,29 @@ public class FitxaActivity extends AppCompatActivity {
             }
         });
 
-        btnComprar.setOnClickListener(new View.OnClickListener() {
+        holder.btnComprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), ""+cuantitySpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), producteActual.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        holder.btnAniadirCarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MainActivity.listaCompra.equals("Carrito vacio"))
+                    MainActivity.listaCompra = "Articulos en carrito:";
+
+                MainActivity.listaCompra = MainActivity.listaCompra.
+                        concat("\n    "+producteActual.getName()+"(x"+producteActual.getCantidadProductos()+") -> "+producteActual.getTotPrice()+"€");
+                Toast.makeText(view.getContext(), "Articulo/s añadido al carrito. Volviendo a la lista de productos", Toast.LENGTH_SHORT).show();
+
+                try {
+                    Thread.sleep(3000);
+                    finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -98,8 +120,8 @@ public class FitxaActivity extends AppCompatActivity {
         }
         return new ArrayAdapter(this, android.R.layout.simple_list_item_1, totalNumSpinner);
     }
-    private void cargarProducto(Producte producteSelected, View view){
-        Holder holder = new Holder(view);
+    private Holder cargarProducto(Producte producteSelected){
+        Holder holder = new Holder();
 
         holder.imgSelected.setImageResource(producteSelected.getImage());
         holder.nameSelected.setText(producteSelected.getName());
@@ -109,12 +131,17 @@ public class FitxaActivity extends AppCompatActivity {
         if (producteSelected.isInDiscount()) {
             holder.inDiscountSelected.setText("En oferta: SI");
             holder.priceSelected.setText(""+producteSelected.getDiscountedPrice() + " €");
-            producteActual = new Producte((int) 1, producteSelected.getDiscountedPrice());
+            producteActual = new Producte(producteSelected.getName(), 1, producteSelected.getDiscountedPrice());
         } else {
-            holder.inDiscountSelected.setText("En oferta: NO");
+            holder.inDiscountSelected.setText("En oferta: NO (-"+producteSelected.getDiscount()+"%)");
             holder.priceSelected.setText(producteSelected.getPrice()+" €");
-            producteActual = new Producte(1, producteSelected.getDiscountedPrice());
+            producteActual = new Producte(producteSelected.getName(), 1, producteSelected.getPrice());
         }
         holder.cuantitySpinner.setAdapter(getCuantityAdapter(producteSelected));
+
+        holder.lblPrecioTotal.setText( (producteActual.getTotPrice() * producteActual.getCantidadProductos()) + " €" );
+
+        return holder;
     }
+
 }

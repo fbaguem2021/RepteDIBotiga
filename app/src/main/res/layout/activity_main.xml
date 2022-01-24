@@ -3,12 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-
-    <androidx.recyclerview.widget.RecyclerView
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+    <androidx.recyclerview.widget.RecyclerView style="@style/recyclerStyle"
         android:id="@+id/list"
-        style="@style/recyclerStyle"
-        tools:listitem="@layout/products_item" />
+        android:layout_height="1000sp"
+        android:layout_marginTop="58sp"
+        android:layout_marginHorizontal="150sp"
+        tools:listitem="@layout/products_item"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnFlotante"
+        android:src="@drawable/carrito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50sp"
+        android:layout_gravity="end|bottom"/>
+
 
 </LinearLayout>
