@@ -19,8 +19,8 @@ import java.text.ParseException;
 public class FitxaActivity extends AppCompatActivity {
 
     public static final String PRODUCTE = "producte";
-    public static final String POSITION = "position";
     public static Producte producteActual;
+    public boolean cancelado;
 
     public class Holder {
         final ImageView imgSelected;
@@ -33,6 +33,7 @@ public class FitxaActivity extends AppCompatActivity {
         final TextView lblPrecioTotal;
         final Button btnAniadirCarrito;
         final Button btnComprar;
+        final Button btnCancelar;
         final View view;
 
         public Holder() {
@@ -46,8 +47,9 @@ public class FitxaActivity extends AppCompatActivity {
             this.priceSelected      = view.findViewById(R.id.priceSelected);
             this.cuantitySpinner    = view.findViewById(R.id.cuantitySpinner);
             this.lblPrecioTotal     = view.findViewById(R.id.lblPrecioTotal);
-            this.btnAniadirCarrito   = view.findViewById(R.id.btnAniadirCarrito);
+            this.btnAniadirCarrito  = view.findViewById(R.id.btnAniadirCarrito);
             this.btnComprar         = view.findViewById(R.id.btnComprar);
+            this.btnCancelar        = view.findViewById(R.id.btnCancelar);
         }
     }
 
@@ -90,6 +92,12 @@ public class FitxaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(view.getContext(), producteActual.toString(), Toast.LENGTH_LONG).show();
+                try {
+                    Thread.sleep(1500);
+                    finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -103,8 +111,19 @@ public class FitxaActivity extends AppCompatActivity {
                         concat("\n    "+producteActual.getName()+"(x"+producteActual.getCantidadProductos()+") -> "+producteActual.getTotPrice()+"€");
                 Toast.makeText(view.getContext(), "Articulo/s añadido al carrito. Volviendo a la lista de productos", Toast.LENGTH_SHORT).show();
 
+
+                finish();
+
+            }
+        });
+
+        holder.btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelado = true;
+                Toast.makeText(view.getContext(), "Cancelando la compra", Toast.LENGTH_SHORT).show();
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                     finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -112,6 +131,17 @@ public class FitxaActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+        if (!cancelado){
+            MainActivity.preLayout.setBackgroundResource(R.drawable.border);
+            MainActivity.producteSelected = null;
+        }
+    }
+
     private ArrayAdapter getCuantityAdapter( Producte producte) {
         String [] totalNumSpinner = new String[producte.getInStock()];
         for(int i = 0; i < producte.getInStock(); i++)

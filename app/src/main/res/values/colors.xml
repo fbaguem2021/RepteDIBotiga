@@ -10,5 +10,4 @@
     <!-- Colors creats per l'usuari -->
     <color name="colorPrimary">#22A9F7</color>
     <color name="colorPrimaryDark">#268BC4</color>
-    <color name="colorAccent"></color>
 </resources>
