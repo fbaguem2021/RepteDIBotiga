@@ -1,6 +1,7 @@
 package com.example.reptedibotiga;
 
 import java.io.Serializable;
+import java.text.ParseException;
 
 public class Producte implements Serializable {
     private String name;
@@ -60,7 +61,16 @@ public class Producte implements Serializable {
     private double calculateDiscountedPrice(double price, int discount) {
         double toDiscount = (double) (price / 100) * discount;
 
-        return (price - toDiscount);
+        java.text.DecimalFormat formatter = new java.text.DecimalFormat("##.##");
+        double discounted = (price - toDiscount);
+
+        try {
+            discounted = formatter.parse(formatter.format(discounted)).doubleValue();
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            discounted = (price - toDiscount);
+        }
+        return discounted;
     }
 
     public String getName() {

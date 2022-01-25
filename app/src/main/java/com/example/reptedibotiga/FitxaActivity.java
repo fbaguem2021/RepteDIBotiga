@@ -79,7 +79,7 @@ public class FitxaActivity extends AppCompatActivity {
                 }
 
                 producteActual.setTotPrice(totalPrice);
-                holder.lblPrecioTotal.setText( formatter.format(totalPrice) + " €" );
+                holder.lblPrecioTotal.setText( formatter.format(totalPrice) + " €");
             }
 
             @Override
@@ -92,12 +92,8 @@ public class FitxaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(view.getContext(), producteActual.toString(), Toast.LENGTH_LONG).show();
-                try {
-                    Thread.sleep(1500);
-                    finish();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+                finish();
             }
         });
 
@@ -122,12 +118,8 @@ public class FitxaActivity extends AppCompatActivity {
             public void onClick(View view) {
                 cancelado = true;
                 Toast.makeText(view.getContext(), "Cancelando la compra", Toast.LENGTH_SHORT).show();
-                try {
-                    Thread.sleep(1000);
-                    finish();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+                finish();
             }
         });
     }
@@ -159,11 +151,11 @@ public class FitxaActivity extends AppCompatActivity {
         holder.lblStored.setText("Almacenado: "+producteSelected.getInStorage());
 
         if (producteSelected.isInDiscount()) {
-            holder.inDiscountSelected.setText("En oferta: SI");
+            holder.inDiscountSelected.setText("En oferta: SI (-"+producteSelected.getDiscount()+"%)");
             holder.priceSelected.setText(""+producteSelected.getDiscountedPrice() + " €");
             producteActual = new Producte(producteSelected.getName(), 1, producteSelected.getDiscountedPrice());
         } else {
-            holder.inDiscountSelected.setText("En oferta: NO (-"+producteSelected.getDiscount()+"%)");
+            holder.inDiscountSelected.setText("En oferta: NO");
             holder.priceSelected.setText(producteSelected.getPrice()+" €");
             producteActual = new Producte(producteSelected.getName(), 1, producteSelected.getPrice());
         }

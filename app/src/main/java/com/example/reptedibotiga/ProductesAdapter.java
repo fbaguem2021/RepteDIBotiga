@@ -34,7 +34,12 @@ class ProductesAdapter extends RecyclerView.Adapter<ProductesAdapter.ViewHolder>
         void bindGame(Producte product){
             imgProduct.setImageResource(product.getImage());
             lblName.setText(product.getName());
-            lblPrice.setText(product.getPrice()+"€");
+            if (product.isInDiscount()){
+                lblPrice.setText(product.getDiscountedPrice()+"€");
+            } else {
+                lblPrice.setText(product.getPrice()+"€");
+            }
+
         }
     }
     @Override

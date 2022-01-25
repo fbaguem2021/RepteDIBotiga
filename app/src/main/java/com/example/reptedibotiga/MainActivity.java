@@ -62,9 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
                     preLayout = curLayout;
                 }
-
-
-
             }
         });
 
@@ -109,16 +106,16 @@ public class MainActivity extends AppCompatActivity {
 
     private Producte[] getProductes(){
         return new Producte[]{
-                new Producte("p0", R.drawable.persona, 94.99, 11, 32, false),
-                new Producte("p1", R.drawable.persona, 59.86, 13, 1 , true, 15),
-                new Producte("p2", R.drawable.persona, 40.70, 18, 62, false),
-                new Producte("p3", R.drawable.persona, 52.98, 6 , 90, false),
-                new Producte("p4", R.drawable.persona, 71.09, 17, 16, true, 25),
-                new Producte("p5", R.drawable.persona, 79.15, 5 , 53, true, 20),
-                new Producte("p6", R.drawable.persona, 38.91, 8 , 51, false),
-                new Producte("p7", R.drawable.persona, 36.48, 14, 27, false),
-                new Producte("p8", R.drawable.persona, 73.35, 7 , 35, true, 15),
-                new Producte("p9", R.drawable.persona, 40.49, 18, 58, true, 20)
+                new Producte("Final Fantasy I"     ,R.drawable.final_fantasy1  ,18.99, 11  ,32 ,false) ,
+                new Producte("Final Fantasy II"    ,R.drawable.final_fantasy2  ,27.86, 13  ,1  ,true   ,15) ,
+                new Producte("Final Fantasy III"   ,R.drawable.final_fantasy3  ,17.70, 18  ,62 ,false) ,
+                new Producte("Final Fantasy IV"    ,R.drawable.final_fantasy4  ,15.98, 6   ,90 ,false) ,
+                new Producte("Final Fantasy V"     ,R.drawable.final_fantasy5  ,17.99, 17  ,16 ,true   ,25) ,
+                new Producte("Final Fantasy VI"    ,R.drawable.final_fantasy6  ,15.15, 5   ,53 ,true   ,20) ,
+                new Producte("Final Fantasy VII"   ,R.drawable.final_fantasy7  ,25.91, 8   ,51 ,false) ,
+                new Producte("Final Fantasy VIII"  ,R.drawable.final_fantasy8  ,20.48, 14  ,27 ,false) ,
+                new Producte("Final Fantasy IX"    ,R.drawable.final_fantasy9  ,20.99, 7   ,35 ,true   ,15) ,
+                new Producte("Final Fantasy X"     ,R.drawable.final_fantasy10 ,30.49, 18  ,58 ,true   ,20)
         };
     }
 }
